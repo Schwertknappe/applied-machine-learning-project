@@ -52,3 +52,8 @@ ehthumbs.db
 Thumbs.db
 
 data/
+data.csv
+test_data.csv
+data.npy
+exp_ids.npy
+labels.npy
