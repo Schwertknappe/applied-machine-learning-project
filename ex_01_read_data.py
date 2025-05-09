@@ -120,17 +120,9 @@ def create_sliding_windows_first_dim(data: np.ndarray, sequence_length: int) -> 
     timesteps = data.shape[1]
     features = data.shape[2]
 
+    # set axes to the correct position to prepare reshape from 4D to 3D
     windowed_data = windows.transpose(0, 3, 1, 2)
     windowed_data = windowed_data.reshape(n_windows, timesteps * sequence_length, features)
-
-    # Reshape to the desired shape
-    #windowed_data = windows.reshape(n_windows, sequence_length * timesteps, features)
-    #windowed_data = np.empty((n_windows, sequence_length * timesteps, features))
-    #for line in range(n_windows):
-    #    for i in range(timesteps):
-    #        for j in range(sequence_length):
-    #            for k in range(features):
-    #                windowed_data[line][(i*10)+j][k] = windows[line][i][k][j]
 
     return windowed_data
 
