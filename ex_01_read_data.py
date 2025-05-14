@@ -169,31 +169,31 @@ def get_welding_data(path: Path, n_samples: int | None = None, return_sequences:
 
         data = (features, labels, exp_ids)
 
+    # get random samples from data if requested
+    if n_samples:
+        # generate random indeces
+        indices = np.random.choice(len(labels), size = n_samples, replace=False)
+        # apply random indices to arrays and update the tuple
+        data = (features[indices], labels[indices], exp_ids[indices])
+        features, labels, exp_ids = data
+
     # create sliding window sequences if requested
     if return_sequences:
-        features = create_sliding_windows_first_dim(features, sequence_length)
-
         if len(labels) < sequence_length:
             raise ValueError("Not enough samples to form a single window")
 
+        features = create_sliding_windows_first_dim(features, sequence_length)
+
         # Slice labels and exp_ids to match the window size: take the last label in each window
-        #labels = np.reshape(labels, (features.shape[0] , sequence_length))
-        #exp_ids = exp_ids[sequence_length - 1:]
         labels = np.lib.stride_tricks.sliding_window_view(labels, sequence_length, axis=0)
         exp_ids = np.lib.stride_tricks.sliding_window_view(exp_ids, sequence_length, axis=0)
 
         data = (features, labels, exp_ids)
 
-    # get random samples from data if requested
-    if n_samples:
-        # generate random indeces
-        indices = np.random.choice(len(labels), size = n_samples, replace=False)
-        data = (features[indices], labels[indices], exp_ids[indices])
-
     return data
 
 
 def test():
-    get_welding_data(Path("test_data.csv"), None, True, 4)
+    get_welding_data(Path("data/test_data.csv"), None, True, 3)
 
 #test()
