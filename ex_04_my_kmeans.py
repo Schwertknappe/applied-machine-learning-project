@@ -66,18 +66,18 @@ class MyKMeans:
         clusters = np.empty(shape=(x.shape[0]))
         clusters[:] = np.nan
         
+        # get initial distances
+        distances = self._compute_distance(x, self.centroids)
+
         with tqdm(range(self.max_iter), desc="KMeans", unit="iter") as pbar:
             for _ in pbar:
-                # get distances
-                distances = self._compute_distance(x, self.centroids)
-
-                # assign each sample to cluster of lowest distance
+                # assign each sample to cluster with centroid of lowest distance
                 new_clusters = np.empty(shape=(x.shape[0]))
                 new_clusters[:] = np.nan
 
                 for i in range(distances.shape[0]):
                     c = np.argmin(distances[i])
-                    new_clusters[i] = c
+                    new_clusters[i] = int(c)
 
                 if np.array_equal(clusters, new_clusters):
                     # no more changes detected -> break out of for loop
@@ -95,7 +95,8 @@ class MyKMeans:
                         self.centroids[c] = x[np.random.randint(0, x.shape[0])]
                 
                 # update progress bar with current iteration inertia (i.e. fit quality)
-                self.inertia_ = self._compute_inertia(x, self.centroids)
+                distances = self._compute_distance(x, self.centroids)
+                self.inertia_ = self._compute_inertia(distances=distances)
                 pbar.set_postfix({"inertia": self.inertia_})
 
         return self
@@ -211,9 +212,9 @@ class MyKMeans:
                                 sum += (dist)**2
                             elif self.distance_metric == "manhattan":
                                 sum += abs(dist)
-                        if self.distance_metric == "euclidean":
-                            sum = np.sqrt(sum)
-                        distances[i, k] = sum
+                    if self.distance_metric == "euclidean":
+                        sum = np.sqrt(sum)
+                    distances[i, k] = sum
 
         return np.array(distances)
 
@@ -241,15 +242,16 @@ class MyKMeans:
             for i in range(x.shape[0]):
                 for k in range(centroids.shape[0]):
                     for j in range(x.shape[2]):
-                        distances[i, k] += dtw.distance_fast(x[i, :, j], centroids[k, :, j], only_ub=False)
+                        distances[i, k] = dtw.distance_fast(x[i, :, j], centroids[k, :, j], only_ub=False)
 
         return distances
 
 
-    def _compute_inertia(self, x: np.ndarray, centroids: np.ndarray) -> float:
+    def _compute_inertia(self, distances: np.ndarray) -> float:
         inertia = 0.0
-        distances = self._compute_distance(x, centroids)
+
         for i in range(distances.shape[0]):
-            inertia += np.argmin(distances[i])
+            idx = np.argmin(distances[i])
+            inertia += (distances[i, idx])**2
         
         return inertia
