@@ -58,3 +58,5 @@ data.npy
 exp_ids.npy
 labels.npy
 dtaidistance-master/
+abgabe/
+.gitignore
