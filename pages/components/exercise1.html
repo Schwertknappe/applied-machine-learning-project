@@ -15,7 +15,7 @@
         </select>
     </div>
     
-    <img id="welding-sample-img" src="plots/ex_01_plots/welding_sample_0.png" alt="Welding Sample Analysis" class="plot-image">
+    <img id="welding-sample-img" src="plots/ex_02/welding_sample_0.png" alt="Welding Sample Analysis" class="plot-image">
 </div>
 
 <script>
@@ -23,7 +23,7 @@
         const selector = document.getElementById('sample-selector');
         const sampleNumber = selector.value;
         const imgElement = document.getElementById('welding-sample-img');
-        imgElement.src = `plots/ex_01_plots/welding_sample_${sampleNumber}.png`;
+        imgElement.src = `plots/ex_02/welding_sample_${sampleNumber}.png`;
         imgElement.alt = `Welding Sample ${sampleNumber} Analysis`;
     }
 </script> 
