@@ -1,0 +1,9 @@
+classifier,features,best_params
+RandomForest,raw,"{'clf__max_depth': None, 'clf__min_samples_split': 2, 'clf__n_estimators': 200}"
+RandomForest,extracted,"{'clf__max_depth': None, 'clf__min_samples_split': 5, 'clf__n_estimators': 100}"
+HistGradientBoosting,raw,"{'clf__learning_rate': 0.1, 'clf__max_depth': None, 'clf__max_iter': 200, 'clf__min_samples_leaf': 20}"
+HistGradientBoosting,extracted,"{'clf__learning_rate': 0.1, 'clf__max_depth': None, 'clf__max_iter': 200, 'clf__min_samples_leaf': 20}"
+SVM,raw,"{'rbf_sampler__gamma': 0.01, 'rbf_sampler__n_components': 1000, 'sgd__alpha': 0.0001}"
+SVM,extracted,"{'rbf_sampler__gamma': 0.1, 'rbf_sampler__n_components': 1000, 'sgd__alpha': 0.0001}"
+MLP,raw,"{'clf__activation': 'tanh', 'clf__alpha': 0.001, 'clf__hidden_layer_sizes': (100,), 'clf__learning_rate_init': 0.001}"
+MLP,extracted,"{'clf__activation': 'relu', 'clf__alpha': 0.001, 'clf__hidden_layer_sizes': (100,), 'clf__learning_rate_init': 0.001}"

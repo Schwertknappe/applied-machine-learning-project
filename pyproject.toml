@@ -31,6 +31,7 @@ dependencies = [
     "httpcore==1.0.7",
     "httpx==0.28.1",
     "idna==3.10",
+    "imbalanced-learn==0.13.0",
     "iniconfig==2.0.0",
     "ipykernel==6.29.5",
     "ipython==9.0.2",
